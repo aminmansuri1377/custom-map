@@ -1,0 +1,68 @@
+/* MapLibre core stylesheet + map container layout. */
+
+@import "maplibre-gl/dist/maplibre-gl.css";
+@import "./markers.css";
+@import "./controls.css";
+
+.cm-map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.cm-map-container .maplibregl-map {
+  font-family: inherit;
+}
+
+/* The marker anchor wrappers MapLibre creates are inline by default. */
+.cm-map-container .maplibregl-marker {
+  z-index: 4;
+}
+
+/* ── RTL / bidirectional text ──
+ * MapLibre injects popups and other overlays into DOM nodes that are
+ * *outside* the normal React tree, so they don't inherit `dir` from
+ * the `<html>` element automatically. We force them to follow the
+ * document direction and apply `unicode-bidi: plaintext` so each text
+ * node is displayed in its natural direction (Farsi stays RTL even
+ * inside an LTR context, and vice versa).
+ */
+[dir="rtl"] .cm-map-container,
+[dir="rtl"] .maplibregl-map {
+  direction: rtl;
+}
+
+.cm-map-container .maplibregl-popup-content,
+.cm-map-container .maplibregl-popup-tip,
+.cm-map-container .maplibregl-popup-close-button {
+  /* `plaintext` lets each text run render in its own direction, so
+   * mixed English/Farsi text always looks correct regardless of the
+   * container's dir. */
+  unicode-bidi: plaintext;
+}
+
+/* Popups: a touch of polish over the default MapLibre look. */
+.cm-map-container .maplibregl-popup-content {
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+  font-size: 13px;
+  color: #18181b;
+}
+
+.cm-popup-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+  unicode-bidi: plaintext;
+  text-align: start;
+}
+
+.cm-popup-desc {
+  color: #52525b;
+  font-size: 12px;
+  line-height: 1.4;
+  unicode-bidi: plaintext;
+  text-align: start;
+}
